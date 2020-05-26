@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    env: dev
+  labels:
+    app: nginx
+  name: deploy-nginx
+  namespace: dev
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      annotations:
+        env: dev
+      labels:
+        app: nginx
+        version: v1
+    spec:
+      containers:
+      - image: nginx:1.15.2
+        name: nginx
+        ports:
+        - containerPort: 80
+          name: http
+        resources:
+          limits:
+            cpu: "0.2"
+            memory: 128Mi
+          requests:
+            cpu: "0.1"
+            memory: 64Mi
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html/
+          name: config-volume
+      volumes:
+      - configMap:
+          items:
+          - key: landing.html
+            path: index.html
+          name: landing-page-d789kg9ttf
+        name: config-volume

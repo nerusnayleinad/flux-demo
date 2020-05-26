@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  landing.html: <h1>This is DEV environment</h1>
+kind: ConfigMap
+metadata:
+  annotations:
+    env: dev
+  name: landing-page-d789kg9ttf
+  namespace: dev
